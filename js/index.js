@@ -111,30 +111,32 @@ function init(status = 1) {
 //调用初始化函数地图
 init();
 
-// 配送公司
-let logistics = $(".logistics").html();
-
-// 骑手手机号码
-let phone = $(".phone").html();
-
-// 骑手名字
-let name = $(".name").html();
-
-// 骑手状态
-let title = $(".title").html();
-
 // 刷新数据
 function refresh() {}
+
+rider();
 
 // 获取骑手信息、寄、收信息
 function rider() {
   request({
-    url: "",
+    url:
+      "http://pay.toozan666.com/logistics/public/api/index/orderXq?origin_id=1539593830942",
     type: "GET",
     data: {}
   })
     .then(res => {
       console.log(res);
+      // 配送公司
+      let logistics = $(".logistics").html();
+
+      // 骑手手机号码
+      let phone = $(".phone").html();
+
+      // 骑手名字
+      let name = $(".name").html();
+
+      // 骑手状态
+      let title = $(".title").html();
     })
     .catch(err => {
       console.log(err);
@@ -146,8 +148,9 @@ function request(params = {}) {
   return new Promise((resolve, reject) => {
     $.ajax({
       ...params,
-      success(res) {
-        const resData = res.data;
+      dataType: "JSON",
+      success: res => {
+        const resData = res;
         resData.code === 1 ? resolve(resData) : reject(resData);
       },
       error: err => {
