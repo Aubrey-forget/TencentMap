@@ -1,6 +1,4 @@
 const container = document.getElementById("container");
-const KEY = "AD5BZ-HMBWV-B45PP-UY6CR-RMVZ3-XWBXG";
-
 //初始化地图函数  自定义函数名init
 function init(params) {
   const {
@@ -139,7 +137,7 @@ rider();
 // 获取骑手信息、寄、收信息
 function rider() {
   request({
-    url: `https://order.toozan.cc/logistics/public/api/index/orderXq?origin_id=15421968657740`,
+    url: `https://order.toozan.cc/logistics/public/api/index/orderXq?origin_id=15427862573132`,
     // url: `https://order.toozan.cc/logistics/public/api/index/orderXq?${GetUrlPara()}`,
     type: "GET",
     data: {}

@@ -1,64 +1,69 @@
 <!DOCTYPE html>
 <html lang="zh">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    />
-    <meta name="format-detection" content="telephone=no" />
 
-    <title>叮叮配送实时位置</title>
-    <link rel="icon" href="./favicon.ico">
-    <link rel="stylesheet" href="./css/index.css" />
-    <script src="https://map.qq.com/api/js?v=2.exp"></script>
-    <script src="./js/jqurey.3.3.1.js"></script>
-    <script src="./js/clipboard.min.js"></script>
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible"
+        content="ie=edge" />
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="format-detection"
+        content="telephone=no" />
 
-  <body>
-    <!-- 配送中 -->
-    <section id="map">
-      <div id="map-box">
-        <div id="container"></div>
-        <div class="envelope"><img src="./images/envelope.png" /></div>
-        <div class="prompt">
-          <img ontouchstart="showModel()" src="./images/envelope.png" />
-          <span ontouchstart="showModel()"
-            >此订单由叮叮配送发单，快来领红包体验吧</span
-          >
-          <span class="close">X</span>
-        </div>
+  <title>叮叮配送实时位置</title>
+  <link rel="icon"
+        href="./favicon.ico">
+  <link rel="stylesheet"
+        href="./css/index.css" />
+  <script src="https://map.qq.com/api/js?v=2.exp&key=B3RBZ-3I7CW-FEHRD-RX5XN-RKEJO-TDF6E"></script>
+  <script src="./js/jqurey.3.3.1.js"></script>
+  <script src="./js/clipboard.min.js"></script>
+</head>
 
-        <div ontouchstart="refresh()" class="refresh">
-          <img src="./images/refresh.png" />
-        </div>
+<body>
+  <!-- 配送中 -->
+  <section id="map">
+    <div id="map-box">
+      <div id="container"></div>
+      <div class="envelope"><img src="./images/envelope.png" /></div>
+      <div class="prompt">
+        <img ontouchstart="showModel()"
+             src="./images/envelope.png" />
+        <span ontouchstart="showModel()">此订单由叮叮配送发单，快来领红包体验吧</span>
+        <span class="close">X</span>
+      </div>
 
-        <div class="basic-info">
-          <h3 class="title"></h3>
-          <div class="rider-info">
+      <div ontouchstart="refresh()"
+           class="refresh">
+        <img src="./images/refresh.png" />
+      </div>
+
+      <div class="basic-info">
+        <h3 class="title"></h3>
+        <div class="rider-info">
+          <div>
+            <img src="./images/avatar.png" />
             <div>
-              <img src="./images/avatar.png" />
-              <div>
-                <div class="rider-name">
-                  <span class="name"></span> <span class="logistics"></span>
-                </div>
-                <p class="phone"></p>
+              <div class="rider-name">
+                <span class="name"></span> <span class="logistics"></span>
               </div>
+              <p class="phone"></p>
             </div>
-            <a id="callPhone"><img src="./images/phone.png"/></a>
           </div>
+          <a id="callPhone"><img src="./images/phone.png" /></a>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- 取消订单 -->
-   <section id="cancel">
+  <!-- 取消订单 -->
+  <section id="cancel">
     <div class="order_cancel_box">
       <div class="cancel_box">
-        <img class="cancel_img" src="./images/cancel.png" />
+        <img class="cancel_img"
+             src="./images/cancel.png" />
         <p>您的订单已被取消</p>
         <div class="order_info">
           <p>货品信息：<span id="goods_info"></span></p>
@@ -71,56 +76,56 @@
         </div>
       </div>
 
-      <div class="order_envelope" ontouchstart="showModel()">
+      <div class="order_envelope"
+           ontouchstart="showModel()">
         <img src="./images/envelope.png" />
         <span>顺便提醒一下，这里还有红包可以领哦</span>
       </div>
     </div>
-   </section>
+  </section>
 
-    <!-- 订单过期 -->
-    <section id="invalid">
-      <div id="expired">
-        <div class="expired-info">
-          <img src="./images/ding.png" />
-          <div>订单已完成超过48小时</div>
-          <p>无法给您提供骑手位置信息</p>
-          <p>给您带来不便请谅解</p>
-          <aside ontouchstart="showModel()">
-            <img src="./images/envelope.png" />
-            <p>别灰心，这里还有红包可以领哦</p>
-          </aside>
-        </div>
-      </div>
-    </section>
-
-    <!---->
-    <div class="model">
-      <div class="model-title">
-        <img src="./images/applets.png" />
-        <img
-          id="btn"
-          data-clipboard-text="叮叮配送"
-          src="./images/default.png"
-        />
-      </div>
-
-      <div class="model-content">
-        <div class="model-left">
-          <div><img src="./images/applets-code.png" /></div>
-          <p>长按二维码分享到微信</p>
-          <p>在微信里长按识别打开小程序领取</p>
-        </div>
-
-        <div class="model-right">
-          <div><img src="./images/tutorial.png" /></div>
-          <p>小程序名称复制成功</p>
-          <p>请在微信小程序中搜索</p>
-        </div>
+  <!-- 订单过期 -->
+  <section id="invalid">
+    <div id="expired">
+      <div class="expired-info">
+        <img src="./images/ding.png" />
+        <div>订单已完成超过48小时</div>
+        <p>无法给您提供骑手位置信息</p>
+        <p>给您带来不便请谅解</p>
+        <aside ontouchstart="showModel()">
+          <img src="./images/envelope.png" />
+          <p>别灰心，这里还有红包可以领哦</p>
+        </aside>
       </div>
     </div>
-    <div class="mask"></div>
+  </section>
 
-    <script src="./js/index.js"></script>
-  </body>
+  <!---->
+  <div class="model">
+    <div class="model-title">
+      <img src="./images/applets.png" />
+      <img id="btn"
+           data-clipboard-text="叮叮配送"
+           src="./images/default.png" />
+    </div>
+
+    <div class="model-content">
+      <div class="model-left">
+        <div><img src="./images/applets-code.png" /></div>
+        <p>长按二维码分享到微信</p>
+        <p>在微信里长按识别打开小程序领取</p>
+      </div>
+
+      <div class="model-right">
+        <div><img src="./images/tutorial.png" /></div>
+        <p>小程序名称复制成功</p>
+        <p>请在微信小程序中搜索</p>
+      </div>
+    </div>
+  </div>
+  <div class="mask"></div>
+
+  <script src="./js/index.js"></script>
+</body>
+
 </html>
