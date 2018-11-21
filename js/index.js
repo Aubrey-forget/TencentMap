@@ -16,7 +16,7 @@ function init(params) {
   let center = new qq.maps.LatLng(transporterLat, transporterLng); // 纬度，经度,地图显示中心 骑手的位置
   let map = new qq.maps.Map(container, {
     center,
-    zoom: 13 //定位范围大小
+    zoom: juli>3000?13: juli>2000?15:juli>1000?16:juli>500?17:juli===0?14:17 //定位范围大小
   });
 
   let marker = new qq.maps.Marker({
@@ -139,6 +139,7 @@ rider();
 // 获取骑手信息、寄、收信息
 function rider() {
   request({
+    // url: `https://order.toozan.cc/logistics/public/api/index/orderXq?origin_id=15427862573132`,
     url: `https://order.toozan.cc/logistics/public/api/index/orderXq?${GetUrlPara()}`,
     type: "GET",
     data: {}
@@ -285,7 +286,7 @@ $(".mask").on("touchstart", function() {
 
 // 关闭红包提示
 $(".close").on("touchstart", function() {
-  $(".prompt").css("left", "-304px");
+  $(".prompt").css("left", "-100%");
   setTimeout(() => {
     $(".envelope").css({
       width: "45px",
