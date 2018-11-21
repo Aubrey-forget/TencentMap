@@ -139,8 +139,8 @@ rider();
 // 获取骑手信息、寄、收信息
 function rider() {
   request({
-    // url: `https://order.toozan.cc/logistics/public/api/index/orderXq?origin_id=15427862573132`,
-    url: `https://order.toozan.cc/logistics/public/api/index/orderXq?${GetUrlPara()}`,
+    url: `https://order.toozan.cc/logistics/public/api/index/orderXq?origin_id=15421968657740`,
+    // url: `https://order.toozan.cc/logistics/public/api/index/orderXq?${GetUrlPara()}`,
     type: "GET",
     data: {}
   })
