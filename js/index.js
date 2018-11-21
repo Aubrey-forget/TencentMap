@@ -159,7 +159,7 @@ function rider() {
           send_lng: parseFloat(resData.send_lng), //商家经度
           transporterLat: parseFloat(resData.transporterLat), //骑手纬度
           transporterLng: parseFloat(resData.transporterLng), //骑手经度
-          juli: resData.juli, //距离
+          juli: resData.juli*1000, //距离
           status: parseInt(resData.order_status) //订单状态 待取货＝2 配送中＝3 已完成＝4 已取消＝5
         };
         //调用初始化函数地图
