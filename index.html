@@ -11,60 +11,63 @@
     <meta name="format-detection" content="telephone=no" />
 
     <title>Document</title>
+    <link rel="icon" href="./favicon.ico">
     <link rel="stylesheet" href="./css/index.css" />
     <script src="https://map.qq.com/api/js?v=2.exp"></script>
     <script src="./js/jqurey.3.3.1.js"></script>
+    <script src="./js/clipboard.min.js"></script>
   </head>
 
   <body>
     <!-- 配送中 -->
-    <div id="map-box">
-      <div id="container"></div>
-      <div class="envelope"><img src="./images/envelope.png" /></div>
-      <div class="prompt">
-        <img ontouchstart="showModel()" src="./images/envelope.png" />
-        <span ontouchstart="showModel()"
-          >此订单由叮叮配送发单，快来领红包体验吧</span
-        >
-        <span class="close">X</span>
-      </div>
+    <section id="map">
+      <div id="map-box">
+        <div id="container"></div>
+        <div class="envelope"><img src="./images/envelope.png" /></div>
+        <div class="prompt">
+          <img ontouchstart="showModel()" src="./images/envelope.png" />
+          <span ontouchstart="showModel()"
+            >此订单由叮叮配送发单，快来领红包体验吧</span
+          >
+          <span class="close">X</span>
+        </div>
 
-      <div ontouchstart="refresh()" class="refresh">
-        <img src="./images/refresh.png" />
-      </div>
+        <div ontouchstart="refresh()" class="refresh">
+          <img src="./images/refresh.png" />
+        </div>
 
-      <div class="basic-info">
-        <h3 class="title">骑手已接单，正赶往您这里</h3>
-
-        <div class="rider-info">
-          <div>
-            <img src="./images/avatar.png" />
+        <div class="basic-info">
+          <h3 class="title"></h3>
+          <div class="rider-info">
             <div>
-              <div class="rider-name">
-                <span class="name">宋彦峤</span>
-                <span class="logistics">达达配送</span>
+              <img src="./images/avatar.png" />
+              <div>
+                <div class="rider-name">
+                  <span class="name"></span> <span class="logistics"></span>
+                </div>
+                <p class="phone"></p>
               </div>
-              <p class="phone">1800-2230-000</p>
             </div>
+            <a id="callPhone"><img src="./images/phone.png"/></a>
           </div>
-          <a href="tel:1800-2230-000"><img src="./images/phone.png"/></a>
         </div>
       </div>
-    </div>
+    </section>
 
     <!-- 取消订单 -->
+   <section id="cancel">
     <div class="order_cancel_box">
       <div class="cancel_box">
         <img class="cancel_img" src="./images/cancel.png" />
         <p>您的订单已被取消</p>
         <div class="order_info">
-          <p>货品信息：<span>文件/1公斤</span></p>
+          <p>货品信息：<span id="goods_info"></span></p>
           <div>
             订单来源：
-            <p><img src="" />#3</p>
+            <p id="orderInfo"></p>
           </div>
-          <p>配送单号：<span>213545415165451</span></p>
-          <p>取消时间：<span>2018-10-29 13:45:23</span></p>
+          <p>配送单号：<span id="order_id"></span></p>
+          <p>取消时间：<span id="order_time"></span></p>
         </div>
       </div>
 
@@ -73,25 +76,33 @@
         <span>顺便提醒一下，这里还有红包可以领哦</span>
       </div>
     </div>
+   </section>
 
     <!-- 订单过期 -->
-    <div id="expired">
-      <div class="expired-info">
-        <img src="./images/ding.png" />
-        <div>订单已完成超过48小时</div>
-        <p>无法给您提供骑手位置信息</p>
-        <p>给您带来不便请谅解</p>
-        <aside ontouchstart="showModel()">
-          <img src="./images/envelope.png" />
-          <p>别灰心，这里还有红包可以领哦</p>
-        </aside>
+    <section id="invalid">
+      <div id="expired">
+        <div class="expired-info">
+          <img src="./images/ding.png" />
+          <div>订单已完成超过48小时</div>
+          <p>无法给您提供骑手位置信息</p>
+          <p>给您带来不便请谅解</p>
+          <aside ontouchstart="showModel()">
+            <img src="./images/envelope.png" />
+            <p>别灰心，这里还有红包可以领哦</p>
+          </aside>
+        </div>
       </div>
-    </div>
+    </section>
 
-    <!--  -->
+    <!---->
     <div class="model">
       <div class="model-title">
-        <img src="./images/applets.png" /> <img src="./images/default.png" />
+        <img src="./images/applets.png" />
+        <img
+          id="btn"
+          data-clipboard-text="叮叮配送"
+          src="./images/default.png"
+        />
       </div>
 
       <div class="model-content">

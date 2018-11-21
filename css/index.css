@@ -7,11 +7,14 @@ a {
   text-decoration: none;
 }
 
+#map,#cancel,#invalid {
+  display: none;
+}
+
 #map-box {
   position: fixed;
   width: 100%;
   height: 100%;
-  display: none;
 }
 
 #expired {
@@ -28,7 +31,6 @@ a {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  display: none;
 }
 
 .expired-info {
@@ -432,9 +434,8 @@ a {
 }
 
 .order_info div img {
-  width: 16px;
   height: 16px;
-  background-color: #333;
+  /* background-color: #333; */
   margin-right: 12px;
 }
 
