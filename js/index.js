@@ -14,7 +14,18 @@ function init(params) {
   let center = new qq.maps.LatLng(transporterLat, transporterLng); // 纬度，经度,地图显示中心 骑手的位置
   let map = new qq.maps.Map(container, {
     center,
-    zoom: juli>3000?13: juli>2000?15:juli>1000?16:juli>500?17:juli===0?14:17 //定位范围大小
+    zoom:
+      juli > 3000
+        ? 13
+        : juli > 2000
+        ? 15
+        : juli > 1000
+        ? 16
+        : juli > 500
+        ? 17
+        : juli === 0
+        ? 14
+        : 17 //定位范围大小
   });
 
   let marker = new qq.maps.Marker({
@@ -121,24 +132,30 @@ function init(params) {
 
 // 截取当前请求的参数
 function GetUrlPara() {
-  var url = document.location.toString();
-  var arrUrl = url.split("?");
-  var para = arrUrl[1];
+  const url = document.location.toString();
+  const arrUrl = url.split("?");
+  const para = arrUrl[1];
   return para;
 }
+
+const key = GetUrlPara();
 
 // 刷新数据
 function refresh() {
   rider();
 }
 
-rider();
+if (key) {
+  rider();
+} else {
+  console.log("未取到参数");
+}
 
 // 获取骑手信息、寄、收信息
 function rider() {
   request({
-    url: `https://order.toozan.cc/logistics/public/api/index/orderXq?origin_id=15427862573132`,
-    // url: `https://order.toozan.cc/logistics/public/api/index/orderXq?${GetUrlPara()}`,
+    // url: `https://order.toozan.cc/logistics/public/api/index/orderXq?origin_id=15427862573132`,
+    url: `https://order.toozan.cc/logistics/public/api/index/orderXq?${key}`,
     type: "GET",
     data: {}
   })
@@ -158,7 +175,7 @@ function rider() {
           send_lng: parseFloat(resData.send_lng), //商家经度
           transporterLat: parseFloat(resData.transporterLat), //骑手纬度
           transporterLng: parseFloat(resData.transporterLng), //骑手经度
-          juli: resData.juli*1000, //距离
+          juli: resData.juli * 1000, //距离
           status: parseInt(resData.order_status) //订单状态 待取货＝2 配送中＝3 已完成＝4 已取消＝5
         };
         //调用初始化函数地图
@@ -197,9 +214,7 @@ function rider() {
         $("#orderInfo").prepend(`<img src="${resData.icon}" />`);
 
         $("#order_id").text(resData.ordernumber);
-        $("#order_time").text(
-          formatDate(resData.UserCancelTime, "Y-M-D h:m:s")
-        );
+        $("#order_time").text(formatDate(resData.cancelTime, "Y-M-D h:m:s"));
       } else if (resData.order_status == 7) {
         $("#invalid").css("display", "block");
       }
