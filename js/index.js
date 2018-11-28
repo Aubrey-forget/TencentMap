@@ -108,7 +108,7 @@ function init(params) {
   } else if (status === 2) {
     labelText = `<div class="mark-text">
                       <p>骑手正在前往商家取货</p>
-                      <p class="distance">距离您<span>${juli}m</span></p>
+                      <p class="distance">距离<span>${juli}m</span></p>
                       <span class="triangle_border_down position-triangle"></span>
                   </div>`;
     mapTextPosition = new qq.maps.Size(-78, -80);
@@ -148,13 +148,15 @@ function refresh() {
 if (key) {
   rider();
 } else {
+  // 测试
+  // rider();
   console.log("未取到参数");
 }
 
 // 获取骑手信息、寄、收信息
 function rider() {
   request({
-    // url: `https://order.toozan.cc/logistics/public/api/index/orderXq?origin_id=15427862573132`,
+    // url: `https://order.toozan.cc/logistics/public/api/index/orderXq?origin_id=2505`,
     url: `https://order.toozan.cc/logistics/public/api/index/orderXq?${key}`,
     type: "GET",
     data: {}
@@ -206,12 +208,26 @@ function rider() {
             resData.goods[i].productTotalPrice +
             "元  ";
         }
+        const source = resData.source;
+        let text;
+
+        if(source===1) {
+          text = '【凸赞Saas】'
+        }else if(source===2) {
+          text = '【饿了么】'
+        }else if(source===3) {
+          text = '【美团配送】'
+        }else if(source===4) {
+          text = '【叮叮配送】'
+        }else {
+          text = '【第三方接口订单】'
+        }
 
         $("#goods_info").text(info);
 
-        $("#orderInfo").text("#" + resData.bigNumb);
+        $("#orderInfo").text( text + "#" + resData.bigNumb);
 
-        $("#orderInfo").prepend(`<img src="${resData.icon}" />`);
+        // $("#orderInfo").prepend(`<img src="${resData.icon}" />`);
 
         $("#order_id").text(resData.ordernumber);
         $("#order_time").text(formatDate(resData.cancelTime, "Y-M-D h:m:s"));
