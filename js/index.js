@@ -11,7 +11,7 @@ function init(params) {
     transporterLng,
     juli
   } = params;
-  let center = new qq.maps.LatLng(transporterLat, transporterLng); // 纬度，经度,地图显示中心 骑手的位置
+  let center = new qq.maps.LatLng(transporterLat?transporterLat:receiver_lat, transporterLng?transporterLng:receiver_lng); // 纬度，经度,地图显示中心 骑手的位置
   let map = new qq.maps.Map(container, {
     center,
     zoom:
@@ -75,17 +75,6 @@ function init(params) {
   markerSender.setIcon(sender);
   markerRecipient.setIcon(recipient);
 
-  // 寄件标记事件
-  // qq.maps.event.addListener(markerRecipient, "click", function(event) {
-  //   const {
-  //     latLng: {
-  //       lat,
-  //       lng
-  //     }
-  //   } = event;
-  //   console.log(lat, lng);
-  // });
-
   //标记文字样式
   let cssC = {
     color: "#333",
@@ -140,6 +129,9 @@ function GetUrlPara() {
 
 const key = GetUrlPara();
 
+// 用来判断是否请求是否结束
+let isRequest = true;
+
 // 刷新数据
 function refresh() {
   rider();
@@ -155,20 +147,31 @@ if (key) {
 
 // 获取骑手信息、寄、收信息
 function rider() {
+  if (!isRequest) {
+    return;
+  }
+  isRequest = false;
   request({
-    // url: `https://order.toozan.cc/logistics/public/api/index/orderXq?origin_id=2505`,
+    // url: `https://order.toozan.cc/logistics/public/api/index/orderXq?origin_id=4566`,
     url: `https://order.toozan.cc/logistics/public/api/index/orderXq?${key}`,
     type: "GET",
     data: {}
   })
     .then(res => {
+      isRequest = true;
       // console.log(res);
       let resData = res.result;
       if (
+        resData.order_status == 1 ||
         resData.order_status == 2 ||
         resData.order_status == 3 ||
         resData.order_status == 4
       ) {
+        if(resData.order_status == 1) {
+          $(".basic-info").css("display", "none");
+        }else {
+          $(".basic-info").css("display", "block");
+        }
         $("#map").css("display", "block");
         let params = {
           receiver_lat: parseFloat(resData.receiver_lat), //收件人纬度
@@ -197,6 +200,7 @@ function rider() {
         } else {
           $(".title").text("订单已完成");
         }
+
       } else if (resData.order_status == 5) {
         $("#cancel").css("display", "block");
 
@@ -211,23 +215,21 @@ function rider() {
         const source = resData.source;
         let text;
 
-        if(source===1) {
-          text = '【凸赞Saas】'
-        }else if(source===2) {
-          text = '【饿了么】'
-        }else if(source===3) {
-          text = '【美团配送】'
-        }else if(source===4) {
-          text = '【叮叮配送】'
-        }else {
-          text = '【第三方接口订单】'
+        if (source === 1) {
+          text = "【凸赞Saas】";
+        } else if (source === 2) {
+          text = "【饿了么】";
+        } else if (source === 3) {
+          text = "【美团配送】";
+        } else if (source === 4) {
+          text = "【叮叮配送】";
+        } else {
+          text = "【第三方接口订单】";
         }
 
         $("#goods_info").text(info);
 
-        $("#orderInfo").text( text + "#" + resData.bigNumb);
-
-        // $("#orderInfo").prepend(`<img src="${resData.icon}" />`);
+        $("#orderInfo").text(text + "#" + resData.bigNumb);
 
         $("#order_id").text(resData.ordernumber);
         $("#order_time").text(formatDate(resData.cancelTime, "Y-M-D h:m:s"));
@@ -236,6 +238,7 @@ function rider() {
       }
     })
     .catch(err => {
+      isRequest = true;
       console.log(err);
     });
 }
